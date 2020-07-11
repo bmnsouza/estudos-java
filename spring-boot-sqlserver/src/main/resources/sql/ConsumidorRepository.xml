@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="ConsumidorModel.buscaPorId" result-class="br.gov.se.sefaz.ndgbackend.model.ConsumidorModel">
+    <query>
+      <![CDATA[
+        select * from USUARIOCAT..tb_UsuarioCat_CPF where idcpf = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ConsumidorModel.buscaPorCpf" result-class="br.gov.se.sefaz.ndgbackend.model.ConsumidorModel">
+    <query>
+      <![CDATA[
+        select * from USUARIOCAT..tb_UsuarioCat_CPF where cpf = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ConsumidorModel.buscaPorNome" result-class="br.gov.se.sefaz.ndgbackend.model.ConsumidorModel">
+    <query>
+      <![CDATA[
+        select * from USUARIOCAT..tb_UsuarioCat_CPF where nome like ?1 + '%' order by nome
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ConsumidorModel.buscaTodos" result-class="br.gov.se.sefaz.ndgbackend.model.ConsumidorModel">
+    <query>
+      <![CDATA[
+        select * from USUARIOCAT..tb_UsuarioCat_CPF order by nome
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ConsumidorModel.cadastra">
+    <query>
+      <![CDATA[
+        exec USUARIOCAT..pr_UsuarioCat_CPF_Inclui2 ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ConsumidorModel.atualiza">
+    <query>
+      <![CDATA[
+        exec USUARIOCAT..pr_UsuarioCat_CPF_Altera2 ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

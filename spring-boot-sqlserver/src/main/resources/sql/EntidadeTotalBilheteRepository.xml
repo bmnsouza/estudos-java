@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="EntidadeTotalBilheteModel.buscaPercentualBilhete" result-class="br.gov.se.sefaz.ndgbackend.model.EntidadeTotalBilheteModel">
+    <query>
+      <![CDATA[
+        select * from (select bil.bil_cnpjEntidade, (select ucn.razao from UsuarioCAT..tb_UsuarioCat_CNPJ ucn where ucn.cnpj = bil.bil_cnpjEntidade) razao,
+        total, cast((total * 100)/cast((select count(*) from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codSorteio = ?1
+        and bil.bil_cnpjEntidade is not null) as decimal) as decimal(8,5)) percentual from (select bil.bil_cnpjEntidade, count(*) total
+        from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codSorteio = ?1 and bil.bil_cnpjEntidade is not null group by bil.bil_cnpjEntidade) bil) bpb
+        order by total desc, razao
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="EntidadeTotalBilheteModel.buscaPercentualIndicacao" result-class="br.gov.se.sefaz.ndgbackend.model.EntidadeTotalBilheteModel">
+    <query>
+      <![CDATA[
+        select * from (select bil.bil_cnpjEntidade, (select ucn.razao from UsuarioCAT..tb_UsuarioCat_CNPJ ucn where ucn.cnpj = bil.bil_cnpjEntidade) razao,
+        total, cast((total * 100)/cast((select count(*) from (select bil.bil_cnpjEntidade, bil.bil_cpfCnpj from NFP_ContaCorrente..TB_BIL_BILHETE bil
+        where bil.sor_codSorteio = ?1 and bil.bil_cnpjEntidade is not null group by bil.bil_cnpjEntidade, bil.bil_cpfCnpj) bil) as decimal)
+        as decimal(8,5)) percentual from (select bil.bil_cnpjEntidade, count(*) total from (select bil.bil_cnpjEntidade, bil.bil_cpfCnpj
+        from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codSorteio = ?1 and bil.bil_cnpjEntidade is not null
+        group by bil.bil_cnpjEntidade, bil.bil_cpfCnpj) bil group by bil.bil_cnpjEntidade) bil) bpi order by total desc, razao
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

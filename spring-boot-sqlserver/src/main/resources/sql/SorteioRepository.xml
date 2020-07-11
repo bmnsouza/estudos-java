@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="SorteioModel.buscaPorCodigo" result-class="br.gov.se.sefaz.ndgbackend.model.SorteioModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..TB_SOR_SORTEIO where sor_codSorteio = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SorteioModel.buscaTodos" result-class="br.gov.se.sefaz.ndgbackend.model.SorteioModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..TB_SOR_SORTEIO order by sor_codSorteio
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SorteioModel.cadastra">
+    <query>
+      <![CDATA[
+        insert into NFP_ContaCorrente..TB_SOR_SORTEIO (sor_codSorteio, sor_dtInicio, sor_dtFim, sor_dtRealizacao, sor_dscObservacao) values (?1, ?2, ?3, ?4, ?5)
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SorteioModel.atualiza">
+    <query>
+      <![CDATA[
+        update NFP_ContaCorrente..TB_SOR_SORTEIO set sor_numfaixaini = ?2, sor_numfaixafim = ?3, sor_numsemente = ?4, sor_hashcodesementebilhete = ?5,
+        sor_flsorteio = ?6, sor_dtrealizacao = ?7, sor_numsorteioloteria = ?8, sor_dscresultadoloteria = ?9, sor_numposimpares = ?10,
+        sor_numSementeSorteio = ?11 where sor_codsorteio = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

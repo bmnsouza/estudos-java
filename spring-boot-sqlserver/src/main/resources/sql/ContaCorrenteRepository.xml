@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="ContaCorrenteModel.buscaPorId" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..ContaCorrente where pkConta = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ContaCorrenteModel.buscaPorCpf" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..ContaCorrente where strCpfCnpjUser = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ContaCorrenteModel.buscaTodos" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..ContaCorrente order by pkConta
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="SorteioPremioResgateModel.buscaExpirados" result-class="br.gov.se.sefaz.ndgbackend.model.SorteioPremioResgateModel">
+    <query>
+      <![CDATA[
+        select * from (select s.sor_codSorteio, convert(varchar(10), s.sor_dtRealizacao, 103) sor_dtRealizacao, cast(s.sop_vlpremiacao as money) sop_vlpremiacao,
+        cast((s.sop_vlpremiacao - m.mov_vlmovimentacao) as money) mov_vlresgate, cast(m.mov_vlmovimentacao as money) mov_vlmovimentacao
+        from (select sor.sor_codSorteio, sor.sor_dtRealizacao, sum(sop.sop_valPremio) sop_vlpremiacao from NFP_ContaCorrente..TB_SOR_SORTEIO sor
+        inner join NFP_ContaCorrente..TB_SOP_SORTEIO_PREMIO sop on (sor.sor_codSorteio = sop.sor_codSorteio) where sor.sor_flSorteio = 4
+        and sop.sop_flPremiado <> 0 group by sor.sor_codSorteio, sor.sor_dtRealizacao) s inner join (select cast(substring(mov.strDescMov,
+        (charindex('#', mov.strDescMov) + 1), (charindex(' (', mov.strDescMov) - (charindex('#', mov.strDescMov) + 1))) as int) mov_codsorteio,
+        (sum(mov.valValorMov) * -1) mov_vlmovimentacao from NFP_ContaCorrente..Movimentacao mov where mov.codTipoMov = 3 group by mov.strDescMov) m
+        on (s.sor_codSorteio = m.mov_codsorteio)) sor order by sor_codSorteio desc
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SorteioPremioResgateModel.buscaNaoExpirados" result-class="br.gov.se.sefaz.ndgbackend.model.SorteioPremioResgateModel">
+    <query>
+      <![CDATA[
+        select * from (select s.sor_codSorteio, convert(varchar(10), s.sor_dtRealizacao, 103) sor_dtRealizacao, cast(s.sop_vlpremiacao as money) sop_vlpremiacao,
+        cast((s.sop_vlpremiacao - m.mov_vlnaoresgatado) as money) mov_vlresgate, cast(m.mov_vlnaoresgatado as money) mov_vlmovimentacao
+        from (select sor.sor_codSorteio, sor.sor_dtRealizacao, sum(sop.sop_valPremio) sop_vlpremiacao from NFP_ContaCorrente..TB_SOR_SORTEIO sor
+        inner join NFP_ContaCorrente..TB_SOP_SORTEIO_PREMIO sop on (sor.sor_codSorteio = sop.sor_codSorteio) where sor.sor_flSorteio = 3
+        and sop.sop_flPremiado <> 0 group by sor.sor_codSorteio, sor.sor_dtRealizacao) s inner join (select mov.sor_codSorteio,
+        sum(mov.valValorMov) mov_vlnaoresgatado from NFP_ContaCorrente..Movimentacao mov where mov.fkContaCorrente in (select sal.pkSaldo
+        from NFP_ContaCorrente..Saldo sal where sal.valValorSaldo > 0) and not exists (select 1 from NFP_ContaCorrente..Movimentacao mov2
+        where mov2.fkContaCorrente = mov.fkContaCorrente and mov2.dtmTimeStamp > mov.dtmTimeStamp and (mov2.codTipoMov in (1, 2) or (mov2.codTipoMov = 3
+        and strDescMov like 'Crédito expirado conforme Regulamento do Sorteio #%' + cast(mov.sor_codSorteio as varchar) + '%'))) group by mov.sor_codSorteio) m
+        on (s.sor_codSorteio = m.sor_codSorteio)) sor order by sor_codSorteio desc
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

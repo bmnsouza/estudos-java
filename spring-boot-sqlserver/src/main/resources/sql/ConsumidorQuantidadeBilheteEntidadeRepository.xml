@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="ConsumidorQuantidadeBilheteEntidadeModel.buscaQuantidade" 
+    result-class="br.gov.se.sefaz.ndgbackend.model.ConsumidorQuantidadeBilheteEntidadeModel">
+    <query>
+      <![CDATA[
+        select * from (select crc.crc_cpfCnpj bil_cpfcnpj, (cast(sum(crc.crc_vlCredito)/100 as int)) quantidade,
+        (select ucn.cnpj from UsuarioCAT..tb_UsuarioCat_CNPJ ucn where upper(ucn.estado) in ('ATIVO', 'BLOQUEADO') and upper(ucn.situacao) = 'ATIVO'
+        and ucn.idcnpj = ucp.idcnpj) bil_cnpjentidade from NFP_ContaCorrente..vw_crc_credito_consumidor crc join UsuarioCAT..tb_UsuarioCat_CPF ucp
+        on (crc.crc_cpfCnpj = ucp.cpf) where cast(crc.crc_dtMovimentacao as date) between ?1 and ?2 group by crc.crc_cpfCnpj, ucp.idcnpj) crc
+        where crc.quantidade > 0 order by 1
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

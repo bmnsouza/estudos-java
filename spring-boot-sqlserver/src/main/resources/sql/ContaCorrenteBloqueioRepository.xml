@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="ContaCorrenteBloqueioModel.buscaPorId" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteBloqueioModel">
+    <query>
+      <![CDATA[
+        select idcc, pkConta, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio where idcc = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ContaCorrenteBloqueioModel.buscaPorContaCorrente" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteBloqueioModel">
+    <query>
+      <![CDATA[
+        select idcc, pkConta, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio where pkConta = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ContaCorrenteBloqueioModel.buscaPorCpf" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteBloqueioModel">
+    <query>
+      <![CDATA[
+        select idcc, pkConta, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio
+        where strCpfCnpjUser = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ContaCorrenteBloqueioModel.buscaTodos" result-class="br.gov.se.sefaz.ndgbackend.model.ContaCorrenteBloqueioModel">
+    <query>
+      <![CDATA[
+        select idcc, pkConta, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio
+        order by data_alteracao desc
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="ContaCorrenteBloqueioModel.cadastra">
+    <query>
+      <![CDATA[
+        insert into NFP_ContaCorrente..ContaCorrente_Bloqueio select pkConta, strCpfCnpjUser, (select nome from USUARIOCAT..tb_UsuarioCat_CPF where cpf = ?1),
+        dtmtimeStamp, ?2, ?3, ?4, getdate() from NFP_ContaCorrente..ContaCorrente where strCpfCnpjUser = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>

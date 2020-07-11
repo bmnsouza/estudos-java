@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+  version="2.0">
+
+  <named-native-query name="SaldoModel.buscaPorId" result-class="br.gov.se.sefaz.ndgbackend.model.SaldoModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..Saldo where pkSaldo = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SaldoModel.buscaPorCpf" result-class="br.gov.se.sefaz.ndgbackend.model.SaldoModel">
+    <query>
+      <![CDATA[
+        select sal.* from NFP_ContaCorrente..Saldo sal, NFP_ContaCorrente..ContaCorrente cco where sal.pkSaldo = cco.pkConta and cco.strCpfCnpjUser = ?1
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SaldoModel.buscaPorSaldoMenorQue" result-class="br.gov.se.sefaz.ndgbackend.model.SaldoModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..Saldo where valvalorsaldo < ?1 order by valvalorsaldo
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SaldoModel.buscaPorSaldoIgualA" result-class="br.gov.se.sefaz.ndgbackend.model.SaldoModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..Saldo where valvalorsaldo = ?1 order by valvalorsaldo
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SaldoModel.buscaPorSaldoMaiorQue" result-class="br.gov.se.sefaz.ndgbackend.model.SaldoModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..Saldo where valvalorsaldo > ?1 order by valvalorsaldo
+      ]]>
+    </query>
+  </named-native-query>
+
+  <named-native-query name="SaldoModel.buscaTodos" result-class="br.gov.se.sefaz.ndgbackend.model.SaldoModel">
+    <query>
+      <![CDATA[
+        select * from NFP_ContaCorrente..Saldo order by valvalorsaldo
+      ]]>
+    </query>
+  </named-native-query>
+
+</entity-mappings>
