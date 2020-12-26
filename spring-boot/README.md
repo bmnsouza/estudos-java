@@ -1,3 +1,2 @@
-# NDG Spring Boot
-
-Back-End do Nota da Gente em Spring Boot
+# spring-boot
+Projeto de estudos sobre **Spring Boot**
