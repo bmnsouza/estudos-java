@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="IcmsContribuinteInscrito.buscarTodos" result-class="bmnsouza.database.fazendario.entity.IcmsContribuinteInscrito">
+		<query>
+      	<![CDATA[
+      		select * from tb_ici_icms_contrib_insc order by 1, 2, 3      	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteInscrito.buscarPorId" result-class="bmnsouza.database.fazendario.entity.IcmsContribuinteInscrito">
+		<query>
+      	<![CDATA[
+       		select * from tb_ici_icms_contrib_insc ici where ici.tpc_tpcontribuinte = ?1 and ici.ret_nrregimetributacaoicms = ?2 and ici.frc_nrformarecolhimentoicms = ?3      	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteInscrito.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_ici_icms_contrib_insc (tpc_tpcontribuinte, ret_nrregimetributacaoicms, frc_nrformarecolhimentoicms) values (?1, ?2, ?3)	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteInscrito.atualizar">
+		<query>
+      	<![CDATA[
+       		update tb_ici_icms_contrib_insc ici set ici.ici_flvisivelcontribuinte = ?4 where ici.tpc_tpcontribuinte = ?1 and ici.ret_nrregimetributacaoicms = ?2
+       		and ici.frc_nrformarecolhimentoicms = ?3
+      	]]>
+	    </query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteInscrito.remover">
+		<query>
+      	<![CDATA[
+       			delete from tb_ici_icms_contrib_insc ici where ici.tpc_tpcontribuinte = ?1 and ici.ret_nrregimetributacaoicms = ?2 and ici.frc_nrformarecolhimentoicms = ?3
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

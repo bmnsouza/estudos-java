@@ -1,2 +1,2 @@
-# estudos-node
-Repositório de estudos sobre Java
+# java
+Repositório de estudos sobre **Java**

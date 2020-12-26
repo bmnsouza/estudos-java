@@ -1,0 +1,44 @@
+{
+	"properties": [
+		{
+			"name": "nota.datasource.jdbc-url",
+			"type": "java.lang.String",
+			"description": "jdbc-url do banco de dados nota"
+		},
+		{
+			"name": "nota.datasource.username",
+			"type": "java.lang.String",
+			"description": "username do banco de dados nota"
+		},
+		{
+			"name": "nota.datasource.password",
+			"type": "java.lang.String",
+			"description": "password do banco de dados nota"
+		},
+		{
+			"name": "fazendario.datasource.jdbc-url",
+			"type": "java.lang.String",
+			"description": "jdbc-url do banco de dados fazendário"
+		},
+		{
+			"name": "fazendario.datasource.username",
+			"type": "java.lang.String",
+			"description": "username do banco de dados fazendário"
+		},
+		{
+			"name": "fazendario.datasource.password",
+			"type": "java.lang.String",
+			"description": "password do banco de dados fazendário"
+		},
+		{
+			"name": "api.base-url.gateway",
+			"type": "java.lang.String",
+			"description": "URL base do Gateway"
+		},
+		{
+			"name": "api.chave.token",
+			"type": "java.lang.String",
+			"description": "Chave para obter o token"
+		}
+	]
+}

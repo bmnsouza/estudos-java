@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Login.isAcessoPermitido">
+		<query>
+      	<![CDATA[
+	        select case when (count(*) > 0) then 'true' else 'false' end acessoPermitido from (SELECT cnf_dtnfc, CNPJ, IE FROM (select distinct cnf.cnf_dtnfc,
+	        to_char(cnf.cnf_dtnfc, 'dd/MM/yyyy') DATA, decode(pjc.pjc_nmfantasia, null, pjc.pjc_nmrazaosocial, pjc.pjc_nmfantasia) EMPRESA, TRIM(l.loc_nmlocalidade) MUNICIPIO,
+	        lpad(pjc.pjc_cdcnpjcontrib, 8, 0) || lpad(pjc.pjc_cdseqcnpjcontrib, 4, 0) || lpad(pjc.pjc_cddigcnpjcontrib, 2, 0) CNPJ, pjc.pes_cdpessoacontribuinte IE,
+	        pjc.pjc_nmrazaosocial, pjc.pjc_nmfantasia from tb_aec_atvd_econ_contrib aec, tb_cnf_clas_nac_atvd_econ_fisc cnf, tb_pjc_pj_contrib_icms_se pjc,
+	        tb_epe_end_pessoa e, tb_loc_localidade l where aec.sga_cdsubgrupo = cnf.sga_cdsubgrupo and aec.atm_cdatvmacro = cnf.atm_cdatvmacro
+	        and aec.cna_cdcnae = cnf.cna_cdcnae and aec.cnf_cdcnaef = cnf.cnf_cdcnaef and e.loc_cdlocalidade = l.loc_cdlocalidade
+	        and e.pes_cdpessoa = pjc.pes_cdpessoacontribuinte and e.epe_tpendereco = 1 and l.uf_sgunidadefederativa = 'SE' and cnf.cnf_dtnfc is not null
+	        and aec.aec_flatvprincipalicms = 1 and pjc.pes_cdpessoacontribuinte = aec.pes_cdpessoacontribuinte and pjc.tpc_tpcontrib <> 5
+	        and (pjc.tsi_cdsituacaocontrib in (1, 2, 3, 4) and not exists (select 1 from tb_hms_hist_mot_situacao_contr hms where hms.tsi_cdsituacaocontrib = 2
+	        and hms.mtv_cdmotivositcontrib = 28 and hms.hms_dtfimmotivosituacao is null and hms.pes_cdpessoacontribuinte = pjc.pes_cdpessoacontribuinte and rownum = 1))
+	        UNION SELECT to_date('01/04/2012', 'dd/mm/yyyy') as cnf_dtnfc, '01/04/2012' DATA, EMPRESA, MUNICIPIO, CNPJ, IE, pjc_nmrazaosocial, pjc_nmfantasia
+	        FROM (select distinct decode(pjc.pjc_nmfantasia, null, pjc.pjc_nmrazaosocial, pjc.pjc_nmfantasia) EMPRESA, TRIM(l.loc_nmlocalidade) MUNICIPIO,
+	        lpad(pjc.pjc_cdcnpjcontrib, 8, 0) || lpad(pjc.pjc_cdseqcnpjcontrib, 4, 0) || lpad(pjc.pjc_cddigcnpjcontrib, 2, 0) CNPJ, pjc.pes_cdpessoacontribuinte IE,
+	        pjc.pjc_nmrazaosocial, pjc.pjc_nmfantasia from tb_aec_atvd_econ_contrib aec, tb_cnf_clas_nac_atvd_econ_fisc cnf, tb_pjc_pj_contrib_icms_se pjc,
+	        tb_epe_end_pessoa e, tb_loc_localidade l where aec.sga_cdsubgrupo = cnf.sga_cdsubgrupo and aec.atm_cdatvmacro = cnf.atm_cdatvmacro
+	        and aec.cna_cdcnae = cnf.cna_cdcnae and aec.cnf_cdcnaef = cnf.cnf_cdcnaef and e.loc_cdlocalidade = l.loc_cdlocalidade
+	        and e.pes_cdpessoa = pjc.pes_cdpessoacontribuinte and e.epe_tpendereco = 1 and l.uf_sgunidadefederativa = 'SE' and cnf.cnf_dtnfc is not null
+	        and aec.aec_flatvprincipalicms <> 1 and pjc.pes_cdpessoacontribuinte = aec.pes_cdpessoacontribuinte and pjc.tpc_tpcontrib <> 5
+	        and (pjc.tsi_cdsituacaocontrib in (1, 2, 3, 4) and not exists (select 1 from tb_hms_hist_mot_situacao_contr hms
+	        where hms.tsi_cdsituacaocontrib = 2 and hms.mtv_cdmotivositcontrib = 28 and hms.hms_dtfimmotivosituacao is null
+	        and hms.pes_cdpessoacontribuinte = pjc.pes_cdpessoacontribuinte and rownum = 1)) MINUS select distinct decode(pjc.pjc_nmfantasia, null, pjc.pjc_nmrazaosocial,
+	        pjc.pjc_nmfantasia) EMPRESA, TRIM(l.loc_nmlocalidade) MUNICIPIO, lpad(pjc.pjc_cdcnpjcontrib, 8, 0) || lpad(pjc.pjc_cdseqcnpjcontrib, 4, 0) ||
+	        lpad(pjc.pjc_cddigcnpjcontrib, 2, 0) CNPJ, pjc.pes_cdpessoacontribuinte IE, pjc.pjc_nmrazaosocial, pjc.pjc_nmfantasia from tb_aec_atvd_econ_contrib aec,
+	        tb_cnf_clas_nac_atvd_econ_fisc cnf, tb_pjc_pj_contrib_icms_se pjc, tb_epe_end_pessoa e, tb_loc_localidade l where aec.sga_cdsubgrupo = cnf.sga_cdsubgrupo
+	        and aec.atm_cdatvmacro = cnf.atm_cdatvmacro and aec.cna_cdcnae = cnf.cna_cdcnae and aec.cnf_cdcnaef = cnf.cnf_cdcnaef and e.loc_cdlocalidade = l.loc_cdlocalidade
+	        and e.pes_cdpessoa = pjc.pes_cdpessoacontribuinte and e.epe_tpendereco = 1 and l.uf_sgunidadefederativa = 'SE' and cnf.cnf_dtnfc is not null
+	        and aec.aec_flatvprincipalicms = 1 and pjc.pes_cdpessoacontribuinte = aec.pes_cdpessoacontribuinte and pjc.tpc_tpcontrib <> 5
+	        and (pjc.tsi_cdsituacaocontrib in (1, 2, 3, 4) and not exists (select 1 from tb_hms_hist_mot_situacao_contr hms where hms.tsi_cdsituacaocontrib = 2
+	        and hms.mtv_cdmotivositcontrib = 28 and hms.hms_dtfimmotivosituacao is null and hms.pes_cdpessoacontribuinte = pjc.pes_cdpessoacontribuinte
+	        and rownum = 1))) TB) TABELA WHERE sysdate >= cnf_dtnfc and IE = ?1)
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Login.buscarPorUsuario" result-class="bmnsouza.database.fazendario.entity.Login">
+		<query>
+      	<![CDATA[
+        	select usr.username, usr.password from tb_user usr where usr.username = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Login.isBloqueado">
+		<query>
+      	<![CDATA[
+        	select case when (count(*) > 0) then 'true' else 'false' end bloqueado from tb_user usr, tb_userstatussystem sta where usr.username = sta.username
+       		and usr.lockdate is not null and sta.statussystemcode = 3 and usr.username = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Login.isObrigatoriedadePassada">
+		<query>
+      	<![CDATA[
+        	select case when (count(*) > 0) then 'true' else 'false' end isObrigatoriedadePassada from USUARIOCAT..tb_CadContrib where ie = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Login.atualizarTentativaLoginSucesso">
+		<query>
+      	<![CDATA[
+        	update tb_user usr set usr.numberfollowattemperr = 0, usr.lockdate = null, usr.lastaccessdate = sysdate where usr.username = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Login.atualizarTentativaLoginErro">
+		<query>
+      	<![CDATA[
+        	update tb_user usr set usr.numberfollowattemperr = decode(usr.numberfollowattemperr, 3, usr.numberfollowattemperr, usr.numberfollowattemperr + 1),
+        	usr.lockdate = decode(usr.numberfollowattemperr, 2, trunc(sysdate), null), usr.lastaccessdate = sysdate where usr.username = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="IcmsContribuinteNaoInscrito.buscarTodos" result-class="bmnsouza.database.fazendario.entity.IcmsContribuinteNaoInscrito">
+		<query>
+      	<![CDATA[
+       		select * from tb_icn_icms_contrib_nao_insc order by 1, 2    	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteNaoInscrito.buscarPorId" result-class="bmnsouza.database.fazendario.entity.IcmsContribuinteNaoInscrito">
+		<query>
+      	<![CDATA[
+       		select * from tb_icn_icms_contrib_nao_insc icn	where icn.obr_nrobjetoreferencia = ?1 and icn.frc_nrformarecolhimentoicms = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteNaoInscrito.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_icn_icms_contrib_nao_insc (obr_nrobjetoreferencia, frc_nrformarecolhimentoicms) values(?1, ?2)	
+      	]]>
+   		</query>
+	</named-native-query>
+
+	<named-native-query name="IcmsContribuinteNaoInscrito.remover">
+		<query>
+      	<![CDATA[
+       		delete from tb_icn_icms_contrib_nao_insc icn where icn.obr_nrobjetoreferencia = ?1 and icn.frc_nrformarecolhimentoicms = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query	name="MotivoAlteracaoDocumento.buscarTodos" result-class="bmnsouza.database.fazendario.entity.MotivoAlteracaoDocumento">
+		<query>
+      	<![CDATA[        
+        	select * from tb_mad_motivo_alteracao_doc order by mad_cdmotivo
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="MotivoAlteracaoDocumento.buscarPorId" result-class="bmnsouza.database.fazendario.entity.MotivoAlteracaoDocumento">
+		<query>
+      	<![CDATA[
+        	select * from tb_mad_motivo_alteracao_doc where mad_cdmotivo = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="MotivoAlteracaoDocumento.cadastrar">
+		<query>
+      	<![CDATA[
+        	insert into tb_mad_motivo_alteracao_doc (mad_dsmotivo, mad_flativo, sid_nrsituacao, mad_flmanual) values (upper(?1), '1', ?2, ?3)
+      	]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query	name="MotivoAlteracaoDocumento.atualizar">
+		<query>
+      	<![CDATA[
+        	update tb_mad_motivo_alteracao_doc set mad_dsmotivo = upper(?2), mad_flativo = ?3, sid_nrsituacao = ?4, mad_flmanual = ?5 where mad_cdmotivo = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="MotivoAlteracaoDocumento.remover">
+		<query>
+      	<![CDATA[
+        	delete from tb_mad_motivo_alteracao_doc where mad_cdmotivo = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

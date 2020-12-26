@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="DocumentoFiscal.buscarPorNotaFiscal" result-class="bmnsouza.database.nota.entity.DocumentoFiscal">
+		<query>
+		<![CDATA[
+			select * from NFA_Consolidado..NFA_CREDITOS where NUM_NOTAFISCAL = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="DocumentoFiscal.buscarPorEmitente" result-class="bmnsouza.database.nota.entity.DocumentoFiscal">
+		<query>
+		<![CDATA[
+			select * from NFA_Consolidado..NFA_CREDITOS where NUM_EMITENTE = ?1 and cast(DAT_EMISSAO as date) between ?2 and ?3 order by DAT_EMISSAO desc
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="DocumentoFiscal.buscarPorDestinatario" result-class="bmnsouza.database.nota.entity.DocumentoFiscal">
+		<query>
+		<![CDATA[
+			select * from NFA_Consolidado..NFA_CREDITOS where NUM_DESTINATARIO = ?1 and cast(DAT_EMISSAO as date) between ?2 and ?3 order by DAT_EMISSAO desc
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="DocumentoFiscal.buscarPorEmitenteDestinatario" result-class="bmnsouza.database.nota.entity.DocumentoFiscal">
+		<query>
+		<![CDATA[
+			select * from NFA_Consolidado..NFA_CREDITOS where NUM_EMITENTE = ?1 and NUM_DESTINATARIO = ?2 and cast(DAT_EMISSAO as date) between ?3 and ?4
+			order by DAT_EMISSAO desc
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="GrupoRecolhimento.buscarTodos" result-class="bmnsouza.database.fazendario.entity.GrupoRecolhimento">
+		<query>
+     	<![CDATA[
+        	select * from tb_grr_grupo_recolhimento
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query	name="GrupoRecolhimento.buscarPorId" result-class="bmnsouza.database.fazendario.entity.GrupoRecolhimento">
+		<query>
+      	<![CDATA[
+        	select * from tb_grr_grupo_recolhimento grr where grr.grr_nrgruporecolhimento = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="GrupoRecolhimento.cadastrar">
+		<query>
+      	<![CDATA[
+        	insert into tb_grr_grupo_recolhimento (grr_dsgruporecolhimento, grr_flativo) values (upper(?1), '1')
+      	]]>
+	    </query>
+	</named-native-query>
+
+	<named-native-query	name="GrupoRecolhimento.atualizar">
+		<query>
+      	<![CDATA[
+        	update tb_grr_grupo_recolhimento grr set grr.grr_dsgruporecolhimento = upper(?2), grr.grr_flativo = ?3 where grr.grr_nrgruporecolhimento = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="GrupoRecolhimento.remover">
+		<query>
+      	<![CDATA[
+        	delete from tb_grr_grupo_recolhimento grr where grr.grr_nrgruporecolhimento = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

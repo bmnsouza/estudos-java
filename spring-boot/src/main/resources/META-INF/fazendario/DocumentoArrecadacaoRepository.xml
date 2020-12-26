@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="DocumentoArrecadacao.buscarTodos" result-class="bmnsouza.database.fazendario.entity.DocumentoArrecadacao">
+		<query>
+      	<![CDATA[
+        	select * from tb_dae_documento_arrecadacao dae order by dae.dba_nrdae
+      	]]>
+    	</query>
+	</named-native-query>
+	
+	<named-native-query	name="DocumentoArrecadacao.buscarPorId"	result-class="bmnsouza.database.fazendario.entity.DocumentoArrecadacao">
+		<query>
+      	<![CDATA[
+ 			select * from tb_dae_documento_arrecadacao dae where dae.dba_nrdae = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+	
+	<named-native-query name="DocumentoArrecadacao.gerarNumeroDocumento">
+		<query>
+		<![CDATA[
+			select sae.fu_seq_dae as nroUltimoDAE from dual
+		]]>
+    	</query>
+	</named-native-query>
+	
+	<named-native-query name="DocumentoArrecadacao.buscarDAEPorDocumento">
+		<query>
+		<![CDATA[
+	   		select dae.dba_nrdae as nrDAE,
+		       sid.sid_dssituacao as dsSituacao,
+		       tdo.tdo_dstipodocumento as dsTipoDocumento,
+		       dae.dae_dtemissao as dtEmissao,
+		       dae.dae_dtvalidade as dtValidade,
+		       dae.dae_dtarrecadacao as dtArrecadacao,
+		       dae.dae_dtenvioonline as dtEnvioOnline,
+		       dae.dae_dtenvioconsolidado as dtEnvioConsolidado,
+		       dae.dae_dtrepasse as dtRepasse,
+		       dae.dae_cdautenticacao as cdAutenticacao,
+		       decode(bco.bco_cdbanco, null, null, (bco.bco_cdbanco || ' - ' || bco.bco_dsbanco)) as dsBanco,
+		       decode(agc.agc_cdagencia, null, null, (agc.agc_cdagencia || ' - ' || agc.agc_dsagencia)) as dsAgencia,
+		       dae.pes_cdpessoa as cdPessoa,
+		       dae.dae_nmpessoa as nmPessoa,
+		       dae.dae_cdpessoaemissor as cdPessoaEmissor,
+		       dae.pes_cdpessoadestinatario as cdPessoaDestinatario,
+		       nvl(dae.dae_vldescontototal, 0) as vlDesconTototal,
+		       dae.dae_vltotal as vlTotal,
+		       ded.ded_nritem as nrItem,
+		       (lpad(ded.ded_nrmesreferencia, 2, '0') || '/' || ded.ded_nranoreferencia) as mesAnoReferencia,
+		       ded.ded_dtvencimentoreceita as dtVencimentoReceita,
+		       rec.rec_dsreceita as dsReceita,
+		       frc.frc_dsformarecolhimentoicms as dsFormaRecolhimentoIcms,
+		       ded.ded_cddocumentoorigem as cdDocumentoOrigem,       
+		       ded.ded_vlprincipalreceita as vlPrincipalReceita,
+		       nvl(ded.ded_vldesconto, 0) as vlDesconto,
+		       nvl(ded.ded_vlatualizmonetaria, 0) as vlAtualizMonetaria,
+		       nvl(ded.ded_vlmultamora, 0) as vlMultaMora,
+		       nvl(ded.ded_vljuros, 0) as vlJuros,
+		       ded.ded_vltotalreceita as vlTotalReceita
+	 			from tb_dae_documento_arrecadacao dae,
+		       tb_tdo_tipo_documento          tdo,
+		       tb_sid_situacao_doc            sid,
+		       tb_bco_banco                   bco,
+		       tb_agc_agencia                 agc,
+		       tb_ded_detalhe_dae             ded,
+		       tb_rec_receita                 rec,
+		       tb_frc_forma_recolhimento_icms frc
+				where dae.tdo_cdtipodocumento = tdo.tdo_cdtipodocumento
+			   and dae.sid_nrsituacao = sid.sid_nrsituacao
+			   and dae.bco_cdbancoarrecadador = bco.bco_cdbanco(+)
+			   and dae.bco_cdbancoarrecadador = agc.bco_cdbanco(+)
+			   and dae.agc_cdagenciaarrecadadora = agc.agc_cdagencia(+)
+			   and dae.dba_nrdae = ded.dba_nrdae
+			   and ded.rec_cdreceita = rec.rec_cdreceita
+			   and ded.frc_nrformarecolhimentoicms = frc.frc_nrformarecolhimentoicms(+)
+			   and dae.dba_nrdae = ?1
+				order by dae.dae_dtemissao, dae.dba_nrdae, ded.ded_nritem
+		]]>
+    	</query>
+	</named-native-query>
+	
+	<named-native-query	name="DocumentoArrecadacao.atualizar">
+		<query>
+      	<![CDATA[
+			update tb_dae_documento_arrecadacao dae set 
+			dae.dae_cdformaarrecadacao = to_number(?2),dae.dae_cdcontroleemissaomensal = to_number(?3),
+			dae.dae_flgeracaovaloradicionado = to_number(?4),dae.vei_cdrenavam = to_number(?5),dae.dae_nrdocumentorecebimento = to_number(?6),
+			dae.dae_vltotal = ?7,dae.dae_vldescontototal = to_number(?8),dae.dae_cdlocalpagamento = to_number(?9),dae.tdo_cdtipodocumento = ?10,
+			dae.sid_nrsituacao = ?11,dae.tsi_cdsituacaocontrib = to_number(?12),dae.tpc_tpcontribuinte = to_number(?13),dae.bco_cdbancoarrecadador = to_number(?14),
+			dae.agc_cdagenciaarrecadadora = to_number(?15),dae.loc_cdlocalidadeemitente = to_number(?16),dae.dae_cdpessoaemissor = ?17,
+			dae.pes_cdpessoa = ?18,dae.pes_cdpessoadestinatario = ?19,dae.dae_nmpessoa = ?20,dae.dae_cdsistemaemissor = ?21,dae.dae_cdautenticacao = ?22,
+			dae.dae_cdcodigobarras = ?23,dae.dae_dsmensagem = ?24,dae.dae_flrestricaoformapagamento = ?25,dae.dae_flcedido = ?26,
+			dae.dae_dtarrecadacao = to_date(?27,'dd/MM/rrrr'),dae.dae_dtvalidade = to_date(?28,'dd/MM/rrrr'),dae.dae_dtsolicitacaopagamento = to_date(?29,'dd/MM/rrrr'),
+			dae.dae_dtenvioonline = to_date(?30,'dd/MM/rrrr'),dae.dae_dtoperacao = sysdate,dae.dae_dtenvioconsolidado = to_date(?31,'dd/MM/rrrr'),
+			dae.dae_dtrepasse = to_date(?32,'dd/MM/rrrr'),dae.dae_dtdepositorepasse = to_date(?33,'dd/MM/rrrr') where dae.dba_nrdae = ?1
+	      ]]>
+	    </query>
+	</named-native-query>
+
+	<named-native-query name="DocumentoArrecadacao.remover">
+		<query>
+    	<![CDATA[
+      		begin
+      		delete from tb_ded_detalhe_dae where dba_nrdae = ?1 ; 
+      		delete from tb_dae_documento_arrecadacao where dba_nrdae = ?1 ; 
+      		delete from tb_dba_documento_base where dba_nrdae = ?1 ;
+      		end;
+    	]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

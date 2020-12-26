@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="ContaCorrenteBloqueio.buscarBloqueioPorCpf" result-class="bmnsouza.database.nota.entity.ContaCorrenteBloqueio">
+		<query>
+		<![CDATA[
+			select idcc, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio cb
+			where cb.strCpfCnpjUser = ?1 and cb.conta_bloqueada = 'S' and cb.data_alteracao = (select max(cb2.data_alteracao)
+			from NFP_ContaCorrente..ContaCorrente_Bloqueio cb2 where cb2.strCpfCnpjUser = cb.strCpfCnpjUser)
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="ContaCorrenteBloqueio.buscarPorCpf" result-class="bmnsouza.database.nota.entity.ContaCorrenteBloqueio">
+		<query>
+		<![CDATA[
+			select idcc, pkConta, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio
+			where strCpfCnpjUser = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="ContaCorrenteBloqueio.buscarTodos" result-class="bmnsouza.database.nota.entity.ContaCorrenteBloqueio">
+		<query>
+		<![CDATA[
+			select idcc, strCpfCnpjUser, conta_bloqueada, resp, justificativa, data_alteracao from NFP_ContaCorrente..ContaCorrente_Bloqueio
+			order by data_alteracao desc
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="ContaCorrenteBloqueio.cadastrar">
+		<query>
+		<![CDATA[
+			insert into NFP_ContaCorrente..ContaCorrente_Bloqueio select pkConta, strCpfCnpjUser, (select nome from USUARIOCAT..tb_UsuarioCat_CPF where cpf = ?1),
+			dtmtimeStamp, ?2, ?3, ?4, getdate() from NFP_ContaCorrente..ContaCorrente where strCpfCnpjUser = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

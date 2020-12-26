@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Movimentacao.buscarPorContaCorrente" result-class="bmnsouza.database.nota.entity.Movimentacao">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Movimentacao where fkContaCorrente = ?1 order by fkContaCorrente
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Movimentacao.buscarPorCpf" result-class="bmnsouza.database.nota.entity.Movimentacao">
+		<query>
+		<![CDATA[
+			select mov.* from NFP_ContaCorrente..Movimentacao mov, NFP_ContaCorrente..ContaCorrente cco where mov.fkContaCorrente = cco.pkConta
+			and cco.strCpfCnpjUser = ?1 order by cco.strCpfCnpjUser
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Movimentacao.buscarPorSorteio" result-class="bmnsouza.database.nota.entity.Movimentacao">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Movimentacao where sor_codSorteio = ?1 order by sor_codSorteio
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Movimentacao.buscarTodos" result-class="bmnsouza.database.nota.entity.Movimentacao">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Movimentacao order by codMovimentacao
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

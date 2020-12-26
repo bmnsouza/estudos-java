@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Consumidor.buscarPorId" result-class="bmnsouza.database.nota.entity.Consumidor">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CPF where idcpf = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.buscarPorCpf" result-class="bmnsouza.database.nota.entity.Consumidor">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CPF where cpf = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.buscarPorNome" result-class="bmnsouza.database.nota.entity.Consumidor">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CPF where nome like ?1 + '%' order by nome
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.buscarTodos" result-class="bmnsouza.database.nota.entity.Consumidor">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CPF order by nome
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.cadastrar">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CPF_Inclui2 ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.atualizar">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CPF_Altera2 ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.atualizarSenha">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CPF_AlteraSenha1 ?1, ?2, ?3, ?4
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.atualizarTentativaLoginSucesso">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CPF_TentativaLoginSucesso ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Consumidor.atualizarTentativaLoginErro">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CPF_TentativaLoginErro ?1
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

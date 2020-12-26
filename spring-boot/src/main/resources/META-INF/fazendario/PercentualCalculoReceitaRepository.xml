@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query	name="PercentualCalculoReceita.buscarTodos" result-class="bmnsouza.database.fazendario.entity.PercentualCalculoReceita">
+		<query>
+      	<![CDATA[
+        	select * from tb_pcr_percent_calculo_receita order by 1, 2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="PercentualCalculoReceita.buscarPorId" result-class="bmnsouza.database.fazendario.entity.PercentualCalculoReceita">
+		<query>
+      	<![CDATA[
+        	select * from tb_pcr_percent_calculo_receita where rec_cdreceita = ?1 and pcr_nrsequencial = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="PercentualCalculoReceita.cadastrar">
+		<query>
+      	<![CDATA[
+			insert into tb_pcr_percent_calculo_receita (rec_cdreceita, pcr_vlpercentmultamora, pcr_qtmeslimitemultamora, pcr_vlpercentjurosmora, pcr_vlpercentagregacao,
+			pcr_vlpercentaliquota, pcr_vlufp, pcr_dtiniciovigencia, pcr_dtfinalvigencia, mre_nrmotivoreceita, pcr_tptransmissao, pcr_vlufpfinal)
+			values (?1, to_number(?2), to_number(?3), to_number(?4), to_number(?5), to_number(?6), to_number(?7), to_date(?8, 'dd/mm/rrrr'), to_date(?9, 'dd/mm/rrrr'),
+			to_number(?10), to_number(?11), to_number(?12))
+    		]]>
+	    </query>
+	</named-native-query>
+
+	<named-native-query name="PercentualCalculoReceita.atualizar">
+		<query>
+      	<![CDATA[
+			update tb_pcr_percent_calculo_receita pcr 
+			set pcr.pcr_vlpercentmultamora = to_number(?3), pcr.pcr_qtmeslimitemultamora = to_number(?4),
+			pcr.pcr_vlpercentjurosmora = to_number(?5), pcr.pcr_vlpercentagregacao = to_number(?6),
+			pcr.pcr_vlpercentaliquota = to_number(?7), pcr.pcr_vlufp = to_number(?8),
+			pcr.pcr_dtiniciovigencia = to_date(?9, 'dd/mm/rrrr'), pcr.pcr_dtfinalvigencia = to_date(?10, 'dd/mm/rrrr'),
+			pcr.mre_nrmotivoreceita = to_number(?11), pcr.pcr_tptransmissao = to_number(?12),
+			pcr.pcr_vlufpfinal = to_number(?13)	where pcr.rec_cdreceita = ?1 and pcr.pcr_nrsequencial = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="PercentualCalculoReceita.remover">
+		<query>
+      	<![CDATA[
+     		delete from tb_pcr_percent_calculo_receita where rec_cdreceita = ?1 and pcr_nrsequencial = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

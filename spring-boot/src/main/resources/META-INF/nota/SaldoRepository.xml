@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Saldo.buscarPorId" result-class="bmnsouza.database.nota.entity.Saldo">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Saldo where pkSaldo = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Saldo.buscarPorCpf" result-class="bmnsouza.database.nota.entity.Saldo">
+		<query>
+		<![CDATA[
+			select sal.* from NFP_ContaCorrente..Saldo sal, NFP_ContaCorrente..ContaCorrente cco where sal.pkSaldo = cco.pkConta and cco.strCpfCnpjUser = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Saldo.buscarPorSaldoMenorQue" result-class="bmnsouza.database.nota.entity.Saldo">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Saldo where valvalorsaldo < ?1 order by valvalorsaldo
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Saldo.buscarPorSaldoIgualA" result-class="bmnsouza.database.nota.entity.Saldo">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Saldo where valvalorsaldo = ?1 order by valvalorsaldo
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Saldo.buscarPorSaldoMaiorQue" result-class="bmnsouza.database.nota.entity.Saldo">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Saldo where valvalorsaldo > ?1 order by valvalorsaldo
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Saldo.buscarTodos" result-class="bmnsouza.database.nota.entity.Saldo">
+		<query>
+		<![CDATA[
+			select * from NFP_ContaCorrente..Saldo order by valvalorsaldo
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

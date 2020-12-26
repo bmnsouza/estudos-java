@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Omissao.buscarPorIe" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_ie = ?1 and ome_dtsaida is null order by ome_ano, ome_mes
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarPorCnpj" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_cnpj = ?1 and ome_dtsaida is null order by ome_ano, ome_mes
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarPorAnoMes" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_ano = ?1 and ome_mes = ?2 and ome_dtsaida is null order by ome_ie
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarPorRbaMenorQue" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_rba < ?1 and ome_dtsaida is null order by ome_rba
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarPorRbaIgualA" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_rba = ?1 and ome_dtsaida is null order by ome_rba
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarPorRbaMaiorQue" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_rba > ?1 and ome_dtsaida is null order by ome_rba
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarPorDataEntrada" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where cast(ome_dtentrada as date) = ?1 and ome_dtsaida is null order by ome_ie
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.buscarTodos" result-class="bmnsouza.database.nota.entity.Omissao">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_ome_omissao_empresa where ome_dtsaida is null order by ome_ie, ome_ano, ome_mes
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Omissao.remover">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..sp_excluir_omissao_empresa ?1, ?2, ?3, ?4, ?5, ?6
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

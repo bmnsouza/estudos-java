@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="TipoDocumentoSituacao.buscarTodos" result-class="bmnsouza.database.fazendario.entity.TipoDocumentoSituacao">
+		<query>
+      	<![CDATA[
+      		select * from tb_tds_tipo_documento_situacao order by 1, 2      	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="TipoDocumentoSituacao.buscarPorId" result-class="bmnsouza.database.fazendario.entity.TipoDocumentoSituacao">
+		<query>
+      	<![CDATA[
+       		select * from tb_tds_tipo_documento_situacao tds where tds.tdo_cdtipodocumento = ?1 and tds.sid_nrsituacao = ?2    	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="TipoDocumentoSituacao.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_tds_tipo_documento_situacao (tdo_cdtipodocumento, sid_nrsituacao) values (?1, ?2)     	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="TipoDocumentoSituacao.remover">
+		<query>
+      	<![CDATA[
+       		delete from tb_tds_tipo_documento_situacao where tdo_cdtipodocumento = ?1 and sid_nrsituacao = ?2   	
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

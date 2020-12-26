@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="FormaRecolhimentoIcms.buscarTodos" result-class="bmnsouza.database.fazendario.entity.FormaRecolhimentoIcms">
+		<query>
+      	<![CDATA[
+        	select * from tb_frc_forma_recolhimento_icms frc order by frc.frc_nrformarecolhimentoicms
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="FormaRecolhimentoIcms.buscarPorId" result-class="bmnsouza.database.fazendario.entity.FormaRecolhimentoIcms">
+		<query>
+      	<![CDATA[
+        	select * from tb_frc_forma_recolhimento_icms frc where frc.frc_nrformarecolhimentoicms = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="FormaRecolhimentoIcms.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_frc_forma_recolhimento_icms (FRC_dsFormaRecolhimentoIcms, FRC_dtInicioVigencia, GRR_nrGrupoRecolhimento, FRC_dtFimVigencia)
+			values (upper(?1), to_Date(?2, 'dd/mm/rrrr'), ?3, to_date(?4, 'dd/mm/rrrr'))
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="FormaRecolhimentoIcms.atualizar">
+		<query>
+      	<![CDATA[
+   			update tb_frc_forma_recolhimento_icms  frc	set frc.frc_dsformarecolhimentoicms = upper(?2), frc.frc_dtiniciovigencia = to_date(?3, 'dd/mm/rrrr'),
+    		frc.grr_nrgruporecolhimento = ?4, frc.frc_dtfimvigencia = to_date(?5, 'dd/mm/rrrr') where frc.frc_nrformarecolhimentoicms = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="FormaRecolhimentoIcms.remover">
+		<query>
+      	<![CDATA[
+    		delete from tb_frc_forma_recolhimento_icms frc where frc.frc_nrformarecolhimentoicms = ?1
+	    ]]>
+	    </query>
+	</named-native-query>
+
+</entity-mappings>

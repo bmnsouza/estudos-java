@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Usuario.buscarPorCpf" result-class="bmnsouza.database.nota.entity.Usuario">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..TB_USU_USUARIO where usu_login = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Usuario.buscarPorNome" result-class="bmnsouza.database.nota.entity.Usuario">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..TB_USU_USUARIO where usu_nome like ?1 + '%' order by usu_nome
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Usuario.buscarPorPerfil" result-class="bmnsouza.database.nota.entity.Usuario">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..TB_USU_USUARIO where per_codPerfil = ?1 order by usu_nome
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Usuario.buscarPorStatus" result-class="bmnsouza.database.nota.entity.Usuario">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..TB_USU_USUARIO where usu_flUsuario = ?1 order by usu_nome
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Usuario.buscarTodos" result-class="bmnsouza.database.nota.entity.Usuario">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..TB_USU_USUARIO order by usu_nome
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Usuario.cadastrar">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..sp_inserir_usuario ?1, ?2, ?3, ?4
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Usuario.atualizar">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..sp_alterar_perfil_usuario1 ?1, ?2, ?3, ?4, ?5
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

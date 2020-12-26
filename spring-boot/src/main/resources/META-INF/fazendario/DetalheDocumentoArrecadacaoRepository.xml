@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+ 	<named-native-query name="DetalheDocumentoArrecadacao.buscarTodos" result-class="bmnsouza.database.fazendario.entity.DetalheDocumentoArrecadacao">
+		<query>
+      	<![CDATA[
+        	select * from tb_ded_detalhe_dae
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="DetalheDocumentoArrecadacao.buscarPorId" result-class="bmnsouza.database.fazendario.entity.DetalheDocumentoArrecadacao">
+		<query>
+      	<![CDATA[
+			select * from tb_ded_detalhe_dae ded where ded.dba_nrdae = ?1 and ded.ded_nritem = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="DetalheDocumentoArrecadacao.atualizar">
+		<query>
+      	<![CDATA[
+			update tb_ded_detalhe_dae ded set ded.ded_nranoreferencia = ?3, ded.ded_nrmesreferencia = ?4, ded.ded_dtvencimentoreceita = to_date(?5,'dd/mm/rrrr'), 
+			ded.ded_nrparcelaapuracao = to_number(?6), ded.ded_qttaxa = to_number(?7), ded.ded_tpproducao = to_number(?8), ded.ded_cdmotivoitd = to_number(?9), 
+			ded.ded_vlprincipalreceita = ?10, ded.ded_vldesconto = to_number(?11), ded.ded_vlatualizmonetaria = to_number(?12), ded.ded_vlmultamora = to_number(?13), 
+			ded.ded_vljuros = to_number(?14), ded.ded_vltotalreceita = ?15, ded.obr_nrobjetoreferencia = ?16, ded.ret_nrregimetributacaoicms = to_number(?17), 
+			ded.rec_cdreceita = ?18, ded.tid_nrtipodesconto = to_number(?19), ded.mre_nrmotivoreceita = to_number(?20), ded.tdg_cdtipodocumentoorigem = to_number(?21), 
+			ded.loc_cdlocalidade = to_number(?22), ded.prs_cdproduto = to_number(?23), ded.prs_tpproduto = to_number(?24), 
+			ded.frc_nrformarecolhimentoicms = to_number(?25), ded.cae_cdcategoriaatvecon = to_number(?26), ded.sga_cdsubgrupo = to_number(?27),
+			ded.atm_cdatvmacro = to_number(?28), ded.cna_cdcnae = to_number(?29), ded.cnf_cdcnaef = to_number(?30), ded.aee_cdatvdeconestadual = to_number(?31),
+			ded.top_nrtipooperacao = to_number(?32), ded.ded_nritemprocesso = to_number(?33), ded.ded_tppagamentoprocesso = ?34,
+			ded.ded_dtdesembaracoaduaneiro = to_date(?35,'dd/mm/rrrr'), ded.org_cdorgao = to_number(?36), ded.ded_nrchaveacesso = ?37, ded.pes_cdpessoadestinatario = ?38,
+			ded.ded_cddocumentoorigem = to_number(?39) where dba_nrdae = ?1 and ded_nritem = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

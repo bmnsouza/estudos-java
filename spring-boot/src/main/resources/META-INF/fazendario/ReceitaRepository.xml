@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Receita.buscarTodos" result-class="bmnsouza.database.fazendario.entity.Receita">
+		<query>
+     	<![CDATA[
+        	select * from tb_rec_receita rec order by rec.rec_cdreceita
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Receita.buscarPorId" result-class="bmnsouza.database.fazendario.entity.Receita">
+		<query>
+     	<![CDATA[
+        	select * from tb_rec_receita rec where rec.rec_cdreceita = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Receita.cadastrar">
+		<query>
+      	<![CDATA[
+        	insert into tb_rec_receita (rec_cdreceita, rec_dsreceita, gre_nrgruporeceita, rec_cdorigemreceita, org_cdorgao, rec_dtiniciovigencia, rec_dtfimvigencia,
+        	rec_cdreceitapai, rec_tpreceita) values (?1, upper(?2), ?3, ?4, ?5, to_date(?6, 'dd/mm/rrrr'), to_date(?7, 'dd/mm/rrrr'), ?8, ?9)
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Receita.atualizar">
+		<query>
+      	<![CDATA[
+        	update tb_rec_receita rec set rec.rec_dsreceita = upper(?2), rec.gre_nrgruporeceita = ?3, rec.rec_cdorigemreceita = ?4, rec.org_cdorgao = ?5,
+        	rec.rec_dtiniciovigencia = to_date(?6, 'dd/mm/rrrr'), rec.rec_dtfimvigencia = to_date(?7, 'dd/mm/rrrr'), rec.rec_cdreceitapai = ?8,
+        	rec.rec_tpreceita = ?9 where rec.rec_cdreceita = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Receita.remover">
+		<query>
+      	<![CDATA[
+        	delete from tb_rec_receita rec where rec.rec_cdreceita = ?1
+      	]]>
+   		</query>
+	</named-native-query>
+
+</entity-mappings>

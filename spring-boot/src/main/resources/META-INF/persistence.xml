@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<persistence-unit name="fazendarioPU" transaction-type="RESOURCE_LOCAL">
+		<mapping-file>META-INF/fazendario/ContadorRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/DetalheDocumentoArrecadacaoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/DocumentoArrecadacaoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/FazendarioRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/FormaRecolhimentoIcmsRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/GrupoReceitaRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/GrupoRecolhimentoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/IcmsContribuinteInscritoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/IcmsContribuinteNaoInscritoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/LoginRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/MotivoAlteracaoDocumentoRepository.xml</mapping-file>		
+		<mapping-file>META-INF/fazendario/ObjetoReferenciaRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/PercentualCalculoReceitaRepository.xml</mapping-file>		
+		<mapping-file>META-INF/fazendario/PercentualRepasseReceitaRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/ProdutoSAERepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/ReceitaRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/SituacaoDocumentoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/TipoDocumentoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/TipoDocumentoSituacaoRepository.xml</mapping-file>
+		<mapping-file>META-INF/fazendario/VencimentoIcmsRepository.xml</mapping-file>
+	</persistence-unit>
+
+	<persistence-unit name="notaPU" transaction-type="RESOURCE_LOCAL">
+		<mapping-file>META-INF/nota/BilheteRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/BloqueioResgateRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/ConsumidorRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/ContaCorrenteBloqueioRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/ContaCorrenteRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/DocumentoFiscalRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/EntidadeRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/MovimentacaoRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/OmissaoRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/PerfilRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/ProconRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/SaldoRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/SorteioPremioRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/SorteioRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/TransferenciaRepository.xml</mapping-file>
+		<mapping-file>META-INF/nota/UsuarioRepository.xml</mapping-file>
+	</persistence-unit>
+
+</persistence>

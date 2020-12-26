@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="VencimentoIcms.buscarTodos" result-class="bmnsouza.database.fazendario.entity.VencimentoIcms">
+		<query>
+      	<![CDATA[
+        	select * from tb_vei_vencimento_icms order by 1, 2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="VencimentoIcms.buscarPorId" result-class="bmnsouza.database.fazendario.entity.VencimentoIcms">
+		<query>
+      	<![CDATA[
+      		select * from tb_vei_vencimento_icms vei where vei.vei_nrsequencialvencimentoicms = ?1 and vei.vei_nrano = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="VencimentoIcms.cadastrar">
+		<query>
+      	<![CDATA[
+      		insert into tb_vei_vencimento_icms
+			(vei_nrano, tpc_tpcontribuinte, frc_nrformarecolhimentoicms, obr_nrobjetoreferencia, cae_cdcategoriaatvecon,
+			sga_cdsubgrupo, atm_cdatvmacro, cna_cdcnae, cnf_cdcnaef, vei_nrparcelaapuracao, vei_flmesvencimentosubsequente,
+			vei_nrdiavencimento, vei_nrportaria, vei_nranoportaria, vei_nrprioridadeportaria, vei_nrmesrefinicial,
+			vei_nranorefinicial, vei_nrmesreffinal, vei_nranoreffinal, vei_dtoperacao, pes_cdpessoa, prs_cdproduto,
+			prs_tpproduto, vei_nrqtdmessubsequente)
+			values
+			(?1, to_number(?2), to_number(?3), to_number(?4), to_number(?5), to_number(?6), to_number(?7), to_number(?8), to_number(?9), ?10, ?11, ?12,  to_number(?13),
+			to_number(?14), ?15, to_number(?16), to_number(?17), to_number(?18), to_number(?19), sysdate, ?20, to_number(?21), to_number(?22), to_number(?23))
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="VencimentoIcms.atualizar">
+		<query>
+      	<![CDATA[
+       		update tb_vei_vencimento_icms
+		   	set tpc_tpcontribuinte = to_number(?3), frc_nrformarecolhimentoicms = to_number(?4),
+		       obr_nrobjetoreferencia = to_number(?5), cae_cdcategoriaatvecon = to_number(?6),
+		       sga_cdsubgrupo = to_number(?7), atm_cdatvmacro = to_number(?8),
+		       cna_cdcnae = to_number(?9), cnf_cdcnaef = to_number(?10),
+		       vei_nrparcelaapuracao = ?11, vei_flmesvencimentosubsequente = ?12,
+		       vei_nrdiavencimento = ?13, vei_nrportaria = to_number(?14),
+		       vei_nranoportaria = to_number(?15), vei_nrprioridadeportaria = ?16,
+		       vei_nrmesrefinicial = to_number(?17), vei_nranorefinicial = to_number(?18),
+		       vei_nrmesreffinal = to_number(?19), vei_nranoreffinal = to_number(?20),
+		       vei_dtoperacao = sysdate, pes_cdpessoa = ?21,
+		       prs_cdproduto = to_number(?22), prs_tpproduto = to_number(?23),
+		       vei_nrqtdmessubsequente = to_number(?24)
+	   		where vei_nrsequencialvencimentoicms = ?1 and vei_nrano = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="VencimentoIcms.remover">
+		<query>
+      	<![CDATA[
+       		delete from tb_vei_vencimento_icms vei where vei.vei_nrsequencialvencimentoicms = ?1 and vei.vei_nrano = ?2
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

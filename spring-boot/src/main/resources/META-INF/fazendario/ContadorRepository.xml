@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Contador.buscarContribuintes" result-class="bmnsouza.database.fazendario.entity.Contador">
+		<query>
+      	<![CDATA[
+			select ndg.ie, ndg.cnpj, ndg.razaoSocial, pes.pes_nmpessoa from (select DISTINCT aec.pes_cdpessoacontribuinte IE, (lpad(pjc.pjc_cdcnpjcontrib, 8, 0) ||
+			lpad(pjc.pjc_cdseqcnpjcontrib, 4, 0) || lpad(pjc.pjc_cddigcnpjcontrib, 2, 0)) CNPJ, pjc.pjc_nmrazaosocial RazaoSocial, pjc.pjc_nmfantasia NomeFantasia,
+			(Select tp.tpl_nmextenso || ' ' || lo.log_nmlogradouro || ',' || e.epe_nrlogradouro || ' ' || b.bai_nmextenso || ' ' || lo.log_cdcep || '-' ||
+			l.uf_sgunidadefederativa From tb_epe_end_pessoa e, tb_loc_localidade l, tb_log_logradouro lo, tb_tpl_tipo_logradouro tp, tb_bai_bairro b
+			where e.loc_cdlocalidade = l.loc_cdlocalidade and e.log_cdlogradouro = lo.log_cdlogradouro and e.loc_cdlocalidade = lo.loc_cdlocalidade
+			and lo.tpl_tplogradouro = tp.tpl_tplogradouro and lo.loc_cdlocalidade = b.loc_cdlocalidade and lo.bai_cdbairro = b.bai_cdbairro and e.epe_tpendereco = 1
+			and e.pes_cdpessoa = aec.pes_cdpessoacontribuinte and rownum = 1) Endereco, (Select l.loc_nmlocalidade From tb_epe_end_pessoa e, tb_loc_localidade l
+			where e.loc_cdlocalidade = l.loc_cdlocalidade and e.epe_tpendereco = 1 and e.pes_cdpessoa = aec.pes_cdpessoacontribuinte and rownum = 1) Municipio,
+			pjc.pjc_vlreceitaacumano RBA, (select min(htc.htc_dtinicio) from sic.vw_htc_hist_tipo_contrib htc where htc.htc_cdpessoa = pjc.pes_cdpessoacontribuinte
+			and htc.htc_cdtipo not in (5, 10)) dt_inicio_atvd, cco.uf_sgufcrccontador, cco.cnt_cdcrccontador from tb_aec_atvd_econ_contrib aec,
+			tb_cnf_clas_nac_atvd_econ_fisc cnf, tb_pjc_pj_contrib_icms_se pjc, tb_cco_cadastro_contrib cco where pjc.pes_cdpessoacontribuinte = cco.pes_cdpessoacontribuinte
+			and cco.cco_fldeposito <> '1' and aec.sga_cdsubgrupo = cnf.sga_cdsubgrupo and aec.atm_cdatvmacro = cnf.atm_cdatvmacro and aec.cna_cdcnae = cnf.cna_cdcnae
+			and aec.cnf_cdcnaef = cnf.cnf_cdcnaef and pjc.pes_cdpessoacontribuinte = aec.pes_cdpessoacontribuinte and cnf.cnf_dtnfc is not null and sysdate >= cnf.cnf_dtnfc
+			and pjc.tpc_tpcontrib not in (5, 10) and (pjc.tsi_cdsituacaocontrib in (1, 2, 3, 4) and not exists (select 1 from tb_hms_hist_mot_situacao_contr hms
+			where hms.tsi_cdsituacaocontrib = 2 and hms.mtv_cdmotivositcontrib = 28 and hms.hms_dtfimmotivosituacao is null and hms.pes_cdpessoacontribuinte =
+			pjc.pes_cdpessoacontribuinte and rownum = 1))) ndg, tb_cnt_contador cnt, corp.vw_pes_pessoa pes where ndg.uf_sgufcrccontador = cnt.uf_sgufcrccontador
+			and ndg.cnt_cdcrccontador = cnt.cnt_cdcrccontador and cnt.pes_cdpessoacontador = pes.pes_cdpessoa and cnt.uf_sgufcrccontador = ?1 and cnt.cnt_cdcrccontador = ?2
+			order by ndg.RazaoSocial
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

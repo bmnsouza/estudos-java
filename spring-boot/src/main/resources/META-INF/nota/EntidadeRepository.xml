@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="Entidade.buscarPorId" result-class="bmnsouza.database.nota.entity.Entidade">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CNPJ where idcnpj = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.buscarPorCnpj" result-class="bmnsouza.database.nota.entity.Entidade">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CNPJ where cnpj = ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.buscarPorRazao" result-class="bmnsouza.database.nota.entity.Entidade">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CNPJ where razao like ?1 + '%' order by razao
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.buscarTodos" result-class="bmnsouza.database.nota.entity.Entidade">
+		<query>
+		<![CDATA[
+			select * from USUARIOCAT..tb_UsuarioCat_CNPJ order by razao
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.cadastrar">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CNPJ_Inclui1 ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.atualizar">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CNPJ_Altera1 ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, ?20, ?21
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.atualizarSenha">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CNPJ_AlteraSenha1 ?1, ?2, ?3, ?4
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.atualizarTentativaLoginSucesso">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CNPJ_TentativaLoginSucesso ?1
+		]]>
+		</query>
+	</named-native-query>
+
+	<named-native-query name="Entidade.atualizarTentativaLoginErro">
+		<query>
+		<![CDATA[
+			exec USUARIOCAT..pr_UsuarioCat_CNPJ_TentativaLoginErro ?1
+		]]>
+		</query>
+	</named-native-query>
+
+</entity-mappings>

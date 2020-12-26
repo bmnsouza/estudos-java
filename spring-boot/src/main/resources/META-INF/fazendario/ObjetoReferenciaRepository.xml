@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query	name="ObjetoReferencia.buscarTodos"	result-class="bmnsouza.database.fazendario.entity.ObjetoReferencia">
+		<query>
+      	<![CDATA[
+       		select * from tb_obr_objeto_referencia order by 1      	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="ObjetoReferencia.buscarPorId"	result-class="bmnsouza.database.fazendario.entity.ObjetoReferencia">
+		<query>
+      	<![CDATA[
+       		select * from tb_obr_objeto_referencia where obr_nrobjetoreferencia = ?1     	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="ObjetoReferencia.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_obr_objeto_referencia (obr_dtiniciovigencia, obr_dtfimvigencia ,obr_dsobjetoreferencia) values (to_date(?1, 'dd/mm/rrrr'), 
+       		to_date(?2, 'dd/mm/rrrr'), upper(?3))   	
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="ObjetoReferencia.atualizar">
+		<query>
+      	<![CDATA[
+      		update tb_obr_objeto_referencia set obr_dtiniciovigencia = to_date(?2, 'dd/mm/rrrr'), obr_dtfimvigencia = to_date(?3, 'dd/mm/rrrr'),
+      		obr_dsobjetoreferencia = upper(?4) where obr_nrobjetoreferencia = ?1       		   
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="ObjetoReferencia.remover">
+		<query>
+      	<![CDATA[
+       		delete from tb_obr_objeto_referencia obj where obj.obr_nrobjetoreferencia = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

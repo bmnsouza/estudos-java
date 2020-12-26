@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="TipoDocumento.buscarTodos" result-class="bmnsouza.database.fazendario.entity.TipoDocumento">
+		<query>
+    	<![CDATA[
+    		select * from tb_tdo_tipo_documento	order by 1
+	    ]]>
+	    </query>
+	</named-native-query>
+
+	<named-native-query name="TipoDocumento.buscarPorId" result-class="bmnsouza.database.fazendario.entity.TipoDocumento">
+		<query>
+      	<![CDATA[
+       		select * from tb_tdo_tipo_documento tdo	where tdo.tdo_cdtipodocumento = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="TipoDocumento.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_tdo_tipo_documento (tdo_cdtipodocumento, tdo_dstipodocumento, tdo_flativo) values (?1 , upper(?2), '1')
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="TipoDocumento.atualizar">
+		<query>
+      	<![CDATA[
+       		update tb_tdo_tipo_documento tdo set tdo.tdo_dstipodocumento = upper(?2), tdo.tdo_flativo = ?3 where tdo.tdo_cdtipodocumento = ?1
+      	]]>
+	    </query>
+	</named-native-query>
+
+	<named-native-query name="TipoDocumento.remover">
+		<query>
+      	<![CDATA[
+       		delete from tb_tdo_tipo_documento tdo where tdo.tdo_cdtipodocumento = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

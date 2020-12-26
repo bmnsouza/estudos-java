@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query	name="SituacaoDocumento.buscarTodos" result-class="bmnsouza.database.fazendario.entity.SituacaoDocumento">
+		<query>
+	    <![CDATA[
+	        select * from tb_sid_situacao_doc sid order by sid.sid_nrsituacao
+	    ]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="SituacaoDocumento.buscarPorId" result-class="bmnsouza.database.fazendario.entity.SituacaoDocumento">
+		<query>
+      	<![CDATA[
+        	select * from tb_sid_situacao_doc sid where sid.sid_nrsituacao = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="SituacaoDocumento.cadastrar">
+		<query>
+      	<![CDATA[
+       		insert into tb_sid_situacao_doc (sid_dssituacao, sid_flativo) values (upper(?1), '1')
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="SituacaoDocumento.atualizar">
+		<query>
+      	<![CDATA[
+        	update tb_sid_situacao_doc sid set sid.sid_dssituacao = upper(?2), sid.sid_flativo = ?3 where sid.sid_nrsituacao = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+	
+	<named-native-query	name="SituacaoDocumento.remover">
+		<query>
+	    <![CDATA[
+	       	delete from tb_sid_situacao_doc sid where sid.sid_nrsituacao = ?1
+	    ]]>
+	    </query>
+	</named-native-query>
+
+</entity-mappings>

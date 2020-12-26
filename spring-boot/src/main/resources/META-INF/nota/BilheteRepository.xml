@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query	name="Bilhete.buscarPremiadosPorSorteio" result-class="bmnsouza.database.nota.entity.Bilhete">
+		<query>
+      	<![CDATA[
+        	select * from NFP_ContaCorrente..TB_BIL_BILHETE where sor_codsorteio = ?1 and sop_codpremio is not null order by sop_codpremio
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Bilhete.buscarConsumidorPorSorteio" result-class="bmnsouza.database.nota.entity.Bilhete">
+		<query>
+      	<![CDATA[
+        	select * from NFP_ContaCorrente..TB_BIL_BILHETE where sor_codsorteio = ?1 and bil_cpfcnpj = ?2 order by bil_numbilhete
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Bilhete.buscarEntidadePorSorteio" result-class="bmnsouza.database.nota.entity.Bilhete">
+		<query>
+      	<![CDATA[
+        	select * from NFP_ContaCorrente..TB_BIL_BILHETE where sor_codsorteio = ?1 and bil_cnpjentidade = ?2 order by bil_numbilhete
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="Bilhete.buscarBilhetesPorSorteio" result-class="bmnsouza.database.nota.entity.Bilhete">
+		<query>
+      	<![CDATA[
+        	select * from NFP_ContaCorrente..TB_BIL_BILHETE where sor_codsorteio = ?1 order by bil_numbilhete
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarConsumidorSemPremioPorSorteio" result-class="bmnsouza.database.nota.entity.Bilhete">
+		<query>
+      	<![CDATA[
+        	select * from NFP_ContaCorrente..TB_BIL_BILHETE bil where sor_codsorteio = ?1 and sop_codpremio is null order by bil_numbilhete
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarEntidadeSemPremioPorSorteio" result-class="bmnsouza.database.nota.entity.Bilhete">
+		<query>
+      	<![CDATA[
+        	select * from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codsorteio = ?1 and bil.sop_codpremio is null and bil_cnpjentidade is not null
+        	order by bil_numbilhete
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarQtdeBilhetesPorDatas">
+		<query>
+      	<![CDATA[
+        	select isnull(sum(crc_vlCredito), 0) from (select vw.crc_cpfCnpj, (cast(sum(vw.crc_vlCredito)/100 as int)) crc_vlCredito
+        	from NFP_ContaCorrente..vw_crc_credito_consumidor vw where cast(vw.crc_dtMovimentacao as date) between ?1 and ?2 group by vw.crc_cpfCnpj) vw
+        	where vw.crc_vlCredito > 0
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarQtdeBilhetesPorSorteio">
+		<query>
+      	<![CDATA[
+        	select count(*) from NFP_ContaCorrente..TB_BIL_BILHETE where sor_codSorteio = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarQtdePremiadosPorSorteio">
+		<query>
+      	<![CDATA[
+        	select count(*) from NFP_ContaCorrente..TB_BIL_BILHETE where sor_codsorteio = ?1 and sop_codpremio is not null
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarQtdeConsumidorPorSorteio">
+		<query>
+      	<![CDATA[
+        	select * from (select bil.bil_cpfcnpj cpf,(select ucp.nome from USUARIOCAT..tb_UsuarioCat_CPF ucp where ucp.cpf = bil.bil_cpfcnpj) nome, count(*) quantidade
+        	from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codsorteio = ?1 group by bil.sor_codsorteio, bil.bil_cpfcnpj) bc order by quantidade desc, nome
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarQtdeEntidade">
+		<query>
+      	<![CDATA[
+        	select * from (select crc.crc_cpfCnpj cpfConsumidor, (cast(sum(crc.crc_vlCredito)/100 as int)) quantidade,
+        	(select ucn.cnpj from UsuarioCAT..tb_UsuarioCat_CNPJ ucn where upper(ucn.estado) in ('ATIVO', 'BLOQUEADO') and upper(ucn.situacao) = 'ATIVO'
+        	and ucn.idcnpj = ucp.idcnpj) cnpjEntidade from NFP_ContaCorrente..vw_crc_credito_consumidor crc join UsuarioCAT..tb_UsuarioCat_CPF ucp
+        	on (crc.crc_cpfCnpj = ucp.cpf) where cast(crc.crc_dtMovimentacao as date) between ?1 and ?2 group by crc.crc_cpfCnpj, ucp.idcnpj) crc
+        	where crc.quantidade > 0 order by 1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarPercentualEntidadeBilhete">
+		<query>
+      	<![CDATA[
+        	select * from (select bil.bil_cnpjEntidade cnpj, (select ucn.razao from UsuarioCAT..tb_UsuarioCat_CNPJ ucn where ucn.cnpj = bil.bil_cnpjEntidade) razao,
+        	total, cast((total * 100)/cast((select count(*) from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codSorteio = ?1
+        	and bil.bil_cnpjEntidade is not null) as decimal) as decimal(8,5)) percentual from (select bil.bil_cnpjEntidade, count(*) total
+        	from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codSorteio = ?1 and bil.bil_cnpjEntidade is not null group by bil.bil_cnpjEntidade) bil) bpb
+        	order by total desc, razao
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query	name="Bilhete.buscarPercentualEntidadeIndicacao">
+		<query>
+      	<![CDATA[
+        	select * from (select bil.bil_cnpjEntidade cnpj, (select ucn.razao from UsuarioCAT..tb_UsuarioCat_CNPJ ucn where ucn.cnpj = bil.bil_cnpjEntidade) razao,
+        	total, cast((total * 100)/cast((select count(*) from (select bil.bil_cnpjEntidade, bil.bil_cpfCnpj from NFP_ContaCorrente..TB_BIL_BILHETE bil
+        	where bil.sor_codSorteio = ?1 and bil.bil_cnpjEntidade is not null group by bil.bil_cnpjEntidade, bil.bil_cpfCnpj) bil) as decimal)
+        	as decimal(8,5)) percentual from (select bil.bil_cnpjEntidade, count(*) total from (select bil.bil_cnpjEntidade, bil.bil_cpfCnpj
+        	from NFP_ContaCorrente..TB_BIL_BILHETE bil where bil.sor_codSorteio = ?1 and bil.bil_cnpjEntidade is not null
+        	group by bil.bil_cnpjEntidade, bil.bil_cpfCnpj) bil group by bil.bil_cnpjEntidade) bil) bpi order by total desc, razao
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>

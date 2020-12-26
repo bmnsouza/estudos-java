@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0" xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<named-native-query name="GrupoReceita.buscarTodos"	result-class="bmnsouza.database.fazendario.entity.GrupoReceita">
+		<query>
+		<![CDATA[
+        	select * from tb_gre_grupo_receita gre order by gre.gre_nrgruporeceita
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="GrupoReceita.buscarPorId" result-class="bmnsouza.database.fazendario.entity.GrupoReceita">
+		<query>
+      	<![CDATA[
+        	select * from tb_gre_grupo_receita gre where gre.gre_nrgruporeceita = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+	<named-native-query name="GrupoReceita.cadastrar">
+		<query>
+      	<![CDATA[
+        	insert into tb_gre_grupo_receita (gre_dsgruporeceita, gre_flativo) values (upper(?1),'1')
+      	]]>
+    	</query>
+	</named-native-query>
+	
+	<named-native-query name="GrupoReceita.atualizar">
+		<query>
+      	<![CDATA[
+        	update tb_gre_grupo_receita gre set gre.gre_dsgruporeceita = upper(?2), gre.gre_flativo = ?3 where gre.gre_nrgruporeceita = ?1
+      	]]>
+	    </query>
+	</named-native-query>
+	
+	<named-native-query name="GrupoReceita.remover">
+		<query>
+      	<![CDATA[
+        	delete from tb_gre_grupo_receita gre where gre.gre_nrgruporeceita = ?1
+      	]]>
+    	</query>
+	</named-native-query>
+
+</entity-mappings>
