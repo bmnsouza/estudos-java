@@ -31,7 +31,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import bmnsouza.exception.ServiceException;
 import bmnsouza.util.result.EntidadeResult;
 import bmnsouza.util.result.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
